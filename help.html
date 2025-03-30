@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Help - We'll be there For You!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+    <div id="navbar"></div>
+
+    <div class="content">
+        <h2>How to Help</h2>
+        <p>You can help by donating food, volunteering, or spreading awareness.</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+        
+            try {
+                const response = await fetch("http://localhost:5500/send-email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, message })
+                });
+        
+                const data = await response.json();
+                document.getElementById("responseMessage").textContent = data.message || "Failed to send.";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("responseMessage").textContent = "Failed to send.";
+            }
+        });
+        </script>
+
+
+</body>
+</html>

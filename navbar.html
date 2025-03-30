@@ -1,0 +1,32 @@
+<nav class="navbar">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="mission.html">Our Mission</a></li>
+        <li><a href="help.html">How to Help</a></li>
+        <li><a href="register.html">Register as a Contributor</a></li>
+    </ul>
+</nav>
+<script>
+    document.getElementById("contactForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+    
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
+    
+        try {
+            const response = await fetch("http://localhost:5500/send-email", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, message })
+            });
+    
+            const data = await response.json();
+            document.getElementById("responseMessage").textContent = data.message || "Failed to send.";
+        } catch (error) {
+            console.error("Error:", error);
+            document.getElementById("responseMessage").textContent = "Failed to send.";
+        }
+    });
+    </script>

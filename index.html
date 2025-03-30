@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hope in Every Meal & Medicine</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>Hope in Every Meal & Medicine</h1>
+        <p>Rescuing surplus food & medicines to serve those in need at discounted prices.</p>
+        
+        <!-- Navbar -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#mission">Our Mission</a></li>
+                <li><a href="#help">How to Help</a></li>
+                <li><a href="#contact">Join Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Transforming Waste into Wellness</h2>
+                <p>Millions of meals & medicines go to waste while many struggle to access them. Be the bridge that connects surplus to those in need.</p>
+                <a href="#help" class="btn">Get Involved</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Us</h2>
+            <p><strong>Hope in Every Meal & Medicine</strong> is an initiative that rescues surplus food from restaurants and excess medicines from individuals, making them available to the underprivileged at highly discounted prices. Our goal is to minimize waste while ensuring access to essentials.</p>
+        </section>
+
+        <!-- Our Mission -->
+        <section id="mission">
+            <h2>Our Mission</h2>
+            <p>We believe in a world where no meal goes to waste and no one is deprived of necessary medication due to affordability issues. Our platform connects donors with people in need, offering them food and medicines at nominal prices.</p>
+        </section>
+
+        <!-- How to Help -->
+        <section id="help">
+            <h2>How You Can Make a Difference</h2>
+            <div class="grid">
+                <div class="help-item">
+                    <h3>Donate Excess Food</h3>
+                    <p>Are you a restaurant, grocery store, or individual with extra food? Help us feed families instead of filling landfills.</p>
+                </div>
+                <div class="help-item">
+                    <h3>Contribute Medicines</h3>
+                    <p>Unused medicines in good condition? We ensure they reach the right hands through verified channels.</p>
+                </div>
+                <div class="help-item">
+                    <h3>Buy at Discounted Rates</h3>
+                    <p>If you or someone you know is struggling, our platform offers food and medicines at highly subsidized prices.</p>
+                </div>
+                <div class="help-item">
+                    <h3>Spread the Word</h3>
+                    <p>Support us by sharing our mission. More awareness means more impact!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Registration Form -->
+        <section id="contact">
+            <h2>Join Us as a Contributor</h2>
+            <form id="contactForm">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" required placeholder="Enter your name">
+            
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="Enter your email">
+            
+                <label for="message">Your Contribution</label>
+                <textarea id="message" required placeholder="Tell us how you'd like to contribute"></textarea>
+            
+                <button type="submit">Submit</button>
+            </form>
+            
+            <p id="responseMessage"></p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Hope in Every Meal & Medicine | Together, We Make a Difference</p>
+    </footer>
+
+    <!-- Contact Form Script -->
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+        
+            try {
+                const response = await fetch("http://localhost:5500/send-email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, message })
+                });
+        
+                const data = await response.json();
+                document.getElementById("responseMessage").textContent = data.message || "Failed to send.";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("responseMessage").textContent = "Failed to send.";
+            }
+        });
+    </script>
+
+</body>
+</html>

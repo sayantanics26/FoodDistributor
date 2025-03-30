@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - We'll be there For You!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+
+    <div id="navbar"></div>
+
+    <div class="content">
+        <h2>About Us</h2>
+        <p>We are a volunteer-based organization that connects surplus food with those in need.</p>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", async (event) => {
+            event.preventDefault();
+        
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+        
+            try {
+                const response = await fetch("http://localhost:5500/send-email", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, message })
+                });
+        
+                const data = await response.json();
+                document.getElementById("responseMessage").textContent = data.message || "Failed to send.";
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById("responseMessage").textContent = "Failed to send.";
+            }
+        });
+        </script>
+
+</body>
+</html>
